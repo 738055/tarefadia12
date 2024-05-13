@@ -8,24 +8,25 @@ function Product(nome, preco, descricao, imagem, disponivel, avaliacao, caracter
     this.caracteristicas = caracteristicas;
     this.tags = tags;
   }
-
   function createHtmlCard(product) {
     return `
-      <div class="card">
-        <img src="${product.imagem}" alt="${product.nome}">
-        <h2>${product.nome}</h2>
-        <p>Preço: R$ ${product.preco.toFixed(2)}</p>
-        <p>${product.descricao}</p>
-        <p>Disponível: ${product.disponivel ? "Sim" : "Não"}</p>
-        <p>Avaliação: ${product.avaliacao} estrelas</p>
-        <h3>Características:</h3>
-        <ul>
-          ${product.caracteristicas.map(c => `<li>${c}</li>`).join("")}
-        </ul>
-        <h3>Tags:</h3>
-        <ul>
-          ${product.tags.map(t => `<li>${t}</li>`).join("")}
-        </ul>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <img src="${product.imagem}" class="card-img-top" alt="${product.nome}">
+          <div class="card-body">
+            <h5 class="card-title">${product.nome}</h5>
+            <p class="card-text">${product.descricao}</p>
+            <p class="card-text">Preço: R$ ${product.preco.toFixed(2)}</p>
+            <p class="card-text">Disponível: ${product.disponivel ? "Sim" : "Não"}</p>
+            <p class="card-text">Avaliação: ${product.avaliacao} estrelas</p>
+            <ul class="list-group list-group-flush">
+              ${product.caracteristicas.map(c => `<li class="list-group-item">${c}</li>`).join("")}
+            </ul>
+          </div>
+          <div class="card-footer">
+            ${product.tags.map(t => `<span class="badge bg-secondary">${t}</span>`).join(" ")}
+          </div>
+        </div>
       </div>
     `;
   }
@@ -33,15 +34,23 @@ function Product(nome, preco, descricao, imagem, disponivel, avaliacao, caracter
     const productList = document.getElementById("product-list");
     productList.innerHTML = ""; 
   
+    const row = document.createElement("div");
+    row.classList.add("row");
+  
     cards.forEach(product => {
       const cardHtml = createHtmlCard(product);
-      productList.innerHTML += cardHtml;
+      row.innerHTML += cardHtml;
     });
+  
+    productList.appendChild(row);
   }
+      
+  
 
 const produtos = [
     new Product("Smartphone XYZ", 999.99, "...", "img/imagemtelefone.jpg", true, 4.5, ["Tela de 6 polegadas", "128GB", "Câmera 48MP"], ["tecnologia", "smartphone", "eletrônicos"]),
-    
+    new Product("Smartphone XYZ", 999.99, "...", "img/imagemtelefone.jpg", true, 4.5, ["Tela de 6 polegadas", "128GB", "Câmera 48MP"], ["tecnologia", "smartphone", "eletrônicos"]),
+    new Product("Smartphone XYZ", 999.99, "...", "img/imagemtelefone.jpg", true, 4.5, ["Tela de 6 polegadas", "128GB", "Câmera 48MP"], ["tecnologia", "smartphone", "eletrônicos"]),
   ];
   
   generateCardList(produtos);
